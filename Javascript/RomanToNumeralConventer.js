@@ -13,72 +13,111 @@
     1000: "M"
   }
   var ranges = [[1,10],[10,100],[100,1000]];
+  /**
+   * @brief map a number to a range to match th symbols array
+   * @param num to map 
+   * @returns an array telling in wish range the Number is
+   */
   function range(num) {
     if(num < 10){
       return [1,5,10];
-    }else if(num < 100){
+    } else if(num < 100){
       return [10,50,100];
-    }else if(num < 1000){
+    } else if(num < 1000){
       return [100,500,1000];
-    }else{
+    } else{
       return [1000];
     }
   }
-  function destructure(num) {
+  /**
+   * @brief Decompose a number in a sum of multiple of 10 plus rest 
+   * @param num number to decompose 
+   * @returns an 4 Value array [a, b, c, d] where num = a*1000 + b*100 + c*10 * d
+   */
+  function decompose(num) {
     let newArr = [0,0,0,0];
-    for(let i=0;i<4;i++){
+    for(let i=0; i<4; i++){
       newArr[3 - i] = (num % 10) * Math.pow(10,i);
       num = parseInt(num /= 10);
     }
     return newArr;
   }
-  function objFactory(num) {
-    this.order = range(num);
-    this.start = symbols[this.order[0]];
-    this.end = symbols[this.order[2]];
-    this.middle = symbols[this.order[1]];
+
+  /**
+   * constructor for each number composing the final number
+   * 
+   * @param num 
+   */
+  function nthNumber (num) {
+    // range gives back and array with the range of the number 
+    // store the array in an attribute of the object
+    this.rangeArr = range(num);
+
+    // store the corresponding symbols in the attribute of the object
+    this.rangeStart = symbols[this.order[0]];
+    this.rangeEnd = symbols[this.order[2]];
+    this.rangeMiddle = symbols[this.order[1]];
   }
-  function nthElement(obj,number){
+
+  /**
+   * 
+   * @param {*} obj 
+   * @param {*} number 
+   * @returns 
+   */
+  function nthElement(obj, number){
     let str = "x";
-    let arr = obj.order;
-    console.log(arr);
-    if((number == arr[0]) || (number == arr[1]) 
-      || (number == arr[2])){
+    let arr = obj.rangeArr;
+
+    
+    if((number == arr[0]) || (number == arr[1]) || (number == arr[2])){
         str = symbols[number];
-    }else if(number < arr[1]){
+    } else if(number < arr[1]){
       if(number == (arr[1]-arr[0])){
         str = obj.start.concat(obj.middle);
-      }else{
+      } else {
         str = obj.start.repeat(parseInt(number.toString()[0]));
       }
     }else if(number > arr[1]){
       if(number == (arr[1]+arr[0])){
         str = obj.middle.concat(obj.start);
-      }else if(number == (arr[2]-arr[0])){
+      } else if(number == (arr[2]-arr[0])){
         str = obj.start.concat(obj.end);
-      }else{
+      } else{
         str = obj.middle.concat(obj.start.repeat(
           parseInt((number-obj.order[1]).toString()[0])));
       }
-    }else {
+    } else {
       str = obj.start.repeat(parseInt(number.toString()[0]));
        console.log("match");
     }
-    // console.log(str);
     return str;
   }
+
+  /**
+   * @brief Convert a Number in a Roman Number 
+   * @param num 
+   * @returns converted Number as string
+   */
   function convertToRoman(num) {
     let result = "";
-    let numbers = destructure(num);
-    console.log(numbers);
-    for(let i=0;i<4;i++){
-      let obj = new objFactory(numbers[i]);
-      if(numbers[i] != 0){
-        console.log(numbers[i]);
-        result = result.concat(nthElement(obj,numbers[i]));
+
+    // Get the different part of the number
+    let allNumbers = decompose(num);
+  
+
+    for(let i=0; i<4; i++) { 
+      // for each part of the number create an object containing the same information
+      // translated in roman number mulktiple of 10 plus the rest 
+      let obj = new nthNumber(allNumbers[i]);
+
+      if(allNumbers[i] != 0){
+        // find the Roman number corresponding to each number coming 
+        // from decomposing the input and concatinate it them one after the oder 
+        result = result.concat(nthElement(obj, allNumbers[i]));
       }
     }
     return result;
   }
   
-  console.log(convertToRoman(2014));
+  //console.log(convertToRoman(2014));
