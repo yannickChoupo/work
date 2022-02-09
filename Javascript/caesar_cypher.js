@@ -3,6 +3,9 @@
  * @param str encoded string to decode 
  * @return The decoded string
  */
+
+const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
 function rot13(str) {
   let newStr = "";
   newStr = str.split("");
@@ -19,6 +22,5 @@ function rot13(str) {
   return newStr.join("");
 }
 /*
-const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 console.log(rot13("SERR PBQR PNZC"));
 */
