@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 //MVC-Controller
 @RestController
 @RequestMapping("/api/urlcheck")
-public class urlCheckController {
+public class UrlCheckController {
 
     private final String SITE_IS_UP = "Site is up!";
     private final String SITE_IS_DOWN = "Site is down!";
@@ -29,9 +29,7 @@ public class urlCheckController {
             HttpURLConnection connection = (HttpURLConnection) urlObj.openConnection();
             connection.setRequestMethod("GET");
             connection.connect();
-            System.out.println(connection.getResponseCode());
             int responseCategorie = connection.getResponseCode() / 100; 
-            System.out.println(responseCategorie);
             returnMessage = SITE_IS_DOWN;
             if(responseCategorie == 2|| responseCategorie == 3) {
                 returnMessage = SITE_IS_UP;
@@ -43,7 +41,6 @@ public class urlCheckController {
             e.printStackTrace();
             returnMessage = INCORECT_URL;
         }
-        System.out.println(returnMessage);
         return returnMessage;
     }
 }

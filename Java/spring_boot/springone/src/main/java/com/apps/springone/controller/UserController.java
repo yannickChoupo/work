@@ -18,8 +18,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import io.swagger.v3.oas.annotations.Operation;
-import springfox.documentation.service.Response;
 
 @RestController
 @RequestMapping("/api/user")
@@ -34,61 +32,26 @@ public class UserController {
     }
 
     @GetMapping(path = "/all", produces = "application/json")
-    @ApiOperation(
-        value = "Gives a list of all users in db back",
-        response = User.class
-    )
-    @ApiResponses(
-        value = {
-            @ApiResponse(
-                code = 200,
-                message = "OK. You're in the right place. Here you go"
-            ),
-            @ApiResponse(
-                code = 301,
-                message = "MOVED PERMANENTLY. We're reorganized a bit. The resource is now in an other location"
-            ),
-            @ApiResponse(
-                code = 302,
-                message = "MOVED TEMPORARILY. We move to the saesonel section for summer. You will find the resource you need in the follwing XXX location"
-            ),
-            @ApiResponse(
-                code = 401,
-                message = "UNAUTHORIED. We keep the resource you need in a locked case. I'm going to have to see your ID."
-            ),
-            @ApiResponse(
-                code = 403,
-                message = "FORBIDDEN. We're reorganized a bit. The resource is now in an other location"
-            ),
-            @ApiResponse(
-                code = 404,
-                message = "NOT FOUND. What's that ? can you come back when my supervisor is here"
-            ),
-            @ApiResponse(
-                code = 410,
-                message = "GONE. I kown the one. A kid lost an eye. so we've pulled it from our shelves permanently. Sorry"
-            ),
-            @ApiResponse(
-                code = 500,
-                message = "INTERNAL SERVER ERROR. ... generic error message "
-            ),
-            @ApiResponse(
-                code = 503,
-                message = "SERVICE UNAVAILABLE. I'm sorry sir. We have a problem in the store Nobody is allowed in"
-            ),
-        }
-    )
-    
+    @ApiOperation(value = "Gives a list of all users in db back", response = User.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK. You're in the right place. Here you go"),
+            @ApiResponse(code = 301, message = "MOVED PERMANENTLY. We're reorganized a bit. The resource is now in an other location"),
+            @ApiResponse(code = 302, message = "MOVED TEMPORARILY. We move to the saesonel section for summer. You will find the resource you need in the follwing XXX location"),
+            @ApiResponse(code = 401, message = "UNAUTHORIED. We keep the resource you need in a locked case. I'm going to have to see your ID."),
+            @ApiResponse(code = 403, message = "FORBIDDEN. We're reorganized a bit. The resource is now in an other location"),
+            @ApiResponse(code = 404, message = "NOT FOUND. What's that ? can you come back when my supervisor is here"),
+            @ApiResponse(code = 410, message = "GONE. I kown the one. A kid lost an eye. so we've pulled it from our shelves permanently. Sorry"),
+            @ApiResponse(code = 500, message = "INTERNAL SERVER ERROR. ... generic error message "),
+            @ApiResponse(code = 503, message = "SERVICE UNAVAILABLE. I'm sorry sir. We have a problem in the store Nobody is allowed in"),
+    })
+
     public List<User> fetchAllUser() {
         return userService.getAllUsers();
     }
 
     @GetMapping("/{id}")
     User getUser(
-        @ApiParam(
-            value = "Give the id of the user you are looking for.",
-            required = true)
-        @PathVariable String id) {
+            @ApiParam(value = "Give the id of the user you are looking for.", required = true) @PathVariable String id) {
         return userService.getUserById(id);
     }
 
