@@ -11,3 +11,9 @@ spring:
             password: admin
             roles: ADMIN
 
+        oauth2:
+            client:
+                registration:
+                    github:
+                        client-id: 6e08ab1a26bfb670cae5
+                        client-secret: ff769e4c5c91366f5f083c2581ffe3f0a2558efe
